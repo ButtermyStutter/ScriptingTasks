@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RockPaperScissors : MonoBehaviour
 {
@@ -16,12 +17,20 @@ public class RockPaperScissors : MonoBehaviour
     public Button rockButton;
     public Button paperButton;
     public Button scissorsButton;
+    public Button restartButton;
 
-    private bool gameRestarting;
-
+    private void Awake()
+    {
+        rockButton.gameObject.SetActive(true);
+        paperButton.gameObject.SetActive(true);
+        scissorsButton.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(false);
+    }
     void Start()
     {
         SetUpGame();
+
+        
     }
     private void SetUpGame()
     {
@@ -47,6 +56,10 @@ public class RockPaperScissors : MonoBehaviour
         else if (buttonClicked == 3)
         {
             gameOutputText.text = "You chose Scissors";
+        }
+        else if (buttonClicked == 4)
+        {
+            SceneManager.LoadScene(0);
         }
 
         // Random range returns a random number between min[inclusive] and max[exclusive]
@@ -99,10 +112,18 @@ public class RockPaperScissors : MonoBehaviour
         if (playerLives == 0)
         {
             gameOutputText.text += "\nThou hast Losteth the match!";
+            rockButton.gameObject.SetActive(false);
+            paperButton.gameObject.SetActive(false);
+            scissorsButton.gameObject.SetActive(false);
+            restartButton.gameObject.SetActive(true);
         }
         if (enemyLives == 0)
         {
             gameOutputText.text += "\nThou hast Won the match!";
+            rockButton.gameObject.SetActive(false);
+            paperButton.gameObject.SetActive(false);
+            scissorsButton.gameObject.SetActive(false);
+            restartButton.gameObject.SetActive(true);
         }
     }
 
